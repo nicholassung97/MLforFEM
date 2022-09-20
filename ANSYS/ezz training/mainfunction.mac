@@ -1,0 +1,33 @@
+/cle
+/prep7
+*dim,nd,,2					! create array to inout nd as variable
+*cfopen,radius.txt				!opens a 'command' file called radius.txt
+!*vwrite,'par1'					!write data to the file in a formatted sequence
+!*vwrite,'par2'
+!*vwrite,'par3'
+!*vwrite,'u1'
+(A6)						!formatting for txt file
+fmat 	      					!run macro 'fmat'
+
+
+ez = 0 !set value of z-strain
+*do,iradius,0.3,0.7,0.1  			!iterating to get variations
+	*do,jradius,0.8,1.6,0.2
+		*do,ithickness,0.5,0.9,0.1
+			functionmesh  		!run macro 'functionmesh'
+!write values to txt file
+!*vwrite,par1
+!*vwrite,par2
+!*vwrite,par3
+!*vwrite,uy(nd(1))
+
+(F16.14)					!formatting for txt file
+eplot
+		*enddo
+	*enddo
+*enddo
+
+*cfclose					!close the file radius.txt
+
+/SHOW,CLOSE 
+/DEVICE,VECTOR,0

@@ -1,0 +1,61 @@
+/prep7
+vclear,all
+vdel,all,,,1
+
+! creates a rectangular 
+BLC4, , ,10,10  
+! create a circle
+CYL4, , ,jradius  
+! subtracts the circle from the rectangular
+ASBA,       1,       2 
+! picks something
+FLST,2,1,5,ORDE,1   
+FITEM,2,3  
+! EXTRUDES VOLUME
+VEXT,3, , ,0,0,1,,,,
+! defines a keypoint
+k,50,iradius
+k,51,iradius,,ithickness
+defines an area by connecting the keypoint
+a,50,5,7,51
+! defines a key point
+k,100
+k,101,,,1
+! defines line between two keypoints
+l,100,101
+! rotate about the axis
+VROTAT,8, , , , , ,100,101,90, 
+! merges
+nummrg,all
+! element type
+ET,1,SOLID185   
+! elements size
+esize,.5
+! Fills an existing unmeshed volume with elements by sweeping the mesh from an adjacent area through the volume.
+vsweep,2
+esize,0.7
+vsweep,1
+! slect 
+asel,s,loc,x,0
+! deifne degree of freedom
+DA,all,SYMM
+asel,s,loc,y,0
+DA,all,SYMM
+asel,s,loc,z,0
+DA,all,SYMM
+asel,s,loc,y,10
+SFA,all,1,PRES,-1 
+allsel,all
+allsel
+
+
+
+!solve for solution
+/solu
+solv
+/post1
+plns,s,1
+!plnsol,u,y
+*get,maxStr3,plnsol,0,max
+
+
